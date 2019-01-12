@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="other/node_modules/bootstrap3/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="other/node_modules/bootstrap3/dist/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="other/node_modules/layui-src/src/css/layui.css"/>
+    <script type="text/javascript" src="other/node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="other/node_modules/bootstrap3/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="other/node_modules/layui-src/dist/layui.all.js"></script>
+    <script type="text/javascript" src="other/node_modules/bootbox/bootbox.js"></script>
+    <script>
+        function searchUserByRole() {
+            $.get("searchUserByRole.do", {"role": $("#searchByRole").val()}, function (data) {
+                var obj = JSON.parse(data);
+                var str = "";
+                $.each(obj, function (index, row, ee) {
+                    str += "<tr align='center'><td><input type='checkbox' value='" + row.id + "'></td><td>" + row.id + "</td><td>" + row.uname + "</td><td>" + row.runame + "</td><td>" + new Date(row.lastLoginTime).toDateString() + "</td><td>" + row.role + "</td><td>"
+                        + "<a href='javascript:deleteUserById(\"" + row.id + "\")' title='删除' onclick='return confirm(\"是否真的删除本记录？\")'><span class='glyphicon glyphicon-remove'></span></a>"
+                        + "<a href='javascript:showUpdateModal' title='更新'><span class='glyphicon glyphicon-save'></span></a></td></tr>"
+                   });
+                $("#alluser").html(str);
+            });
+        }
+
+        function optionUserInfo() {
+            var btn_value = $("#btnModal").html();
+            if (btn_value=="添加"){
+                $.post("addUserInfo.do", {"uname": $("#uname").val(),"runame": $("#runame").val(), "role": $("#role").val()}, function (data) {
+                   alert(data);
+                    if (data == "true") {
+                        layer.msg("添加记录成功！");//alert("add success");
+                        $("#addModal").modal("hide");
+                        findAllUser();
+                    } else {
+                        layer.msg("添加记录失败！");
+                    }
+                });
+            }else {
+                $.post("updateUserInfo.do", {"uname": $("#uname").val(),"runame": $("#runame").val(), "role": $("#role").val()}, function (data) {
+                    alert(data);
+                    if (data == "true") {
+                        layer.msg("更新成功！");//alert("update success");
+                        $("#addModal").modal("hide");
+                        findAllUser();
+                    } else {
+                        layer.msg("更新失败！");
+                    }
+                });
+            }
+            $("#userInfoModal").modal("hide");
+        }
+
+        function showUserInfoModal(id,data) {
+            // alert(JSON.stringify(data));
+            if (id == 0) {
+                $("#myModalLabel").html("更新用户信息");
+                $("#btnModal").html("更新");
+                $("#uname").val(data.uname);
+                $("#runame").val(data.runame);
+                $("#role").find("option[value='"+data.role+"']").attr("selected",true);
+            } else {
+                $("#myModalLabel").html("添加用户信息");
+                $("#btnModal").html("添加");
+                $("#uname").val("");
+                $("#runame").val("");
+                $("#role").find("option[value='-']").attr("selected",true);
+            }
+                $("#userInfoModal").modal("show");
+        }
+
+        function deleteUserById(id) {
+            console.info(id);//或者alert("test");
+            bootbox.confirm({
+                message: "是否删除本记录？",
+                ttitle: "确认提示",
+                buttons: {
+                    confirm: {
+                        label: '确定',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: '取消',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+                    //  alert(result==true);
+                    if (result == true) {
+                        $.ajax({
+                            url: "deleteUserById.do",
+                            data: {"id": id},
+                            success: function (result) {
+                                if (result == "true") {
+                                    layer.msg("删除记录成功!");
+                                    findAllUser();
+                                } else
+                                    layer.msg("删除记录失败!");
+                            },
+                            error: function () {
+                                layer.msg("访问服务器失败！");
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        function findAllUser() {
+            $.ajax({
+                url: "findAllUser.do",
+                success: function (result) {
+                    var obj = JSON.parse(result);
+                    var str = "";
+                    $.each(obj, function (index, row, ee) {
+                        str += "<tr align='center'><td><input id='checkbox' type='checkbox' value='" + row.id + "'></td><td>" + row.id + "</td><td>" + row.uname + "</td><td>" + row.runame + "</td><td>" + new Date(row.lastLoginTime).toDateString() + "</td><td>" + row.role + "</td><td>"
+                            + "<a href='javascript:deleteUserById(\"" + row.id + "\")' title='删除' onclick='return confirm(\"是否真的删除本记录？\")'><span class='glyphicon glyphicon-remove'></span></a>"
+                            + "<a href='javascript:showUserInfoModal(0,"+JSON.stringify(row)+")' title='更新'><span class='glyphicon glyphicon-save'></span></a></td></tr>"
+                    });
+                    $("#alluser").html(str);
+                },
+                error: function () {
+                    alert("服务器请求失败！");
+                }
+            });
+        }
+
+        $(function () {
+            findAllUser();
+        });
+
+
+
+    </script>
+</head>
+
+<body>
+<span class="layui-breadcrumb">
+  <a href="/">首页</a>
+  <a href="/demo/">演示</a>
+  <a><cite>导航元素</cite></a>
+</span>
+<fieldset class="layui-elem-field layui-field-title">
+    <legend>用户信息管理</legend>
+</fieldset>
+<div class="layui-btn-group">
+    <button class="layui-btn" onclick="javascript:showUserInfoModal(1,null)">添加</button>
+    <!--<button class="layui-btn" onclick="javascript:showUserInfoModal(0,row)">编辑</button>-->
+    <!--<button class="layui-btn" onclick="javascript:deleteUserById(dept)">删除</button>-->
+    <input type="submit" value="删除" name="tijiao" onClick='SelectCheckbox("dept",this.form)'>
+</div>
+<select class="layui_input" id="searchByRole" onchange="javascript:searchUserByRole()">
+    <option class="layui-btn" value="admin">管理员</option>
+    <option class="layui-btn" value="teacher">教师</option>
+    <option class="layui-btn" value="student">学生</option>
+</select>
+
+
+<table class="layui-table" lay-size="sm">
+    <tr align="center">
+        <td>全选</td>
+        <td>ID</td>
+        <td>用户名</td>
+        <td>真实姓名</td>
+        <td>最后一次登录时间</td>
+        <td>权限</td>
+        <td>操作</td>
+    </tr>
+    <tbody id="alluser"></tbody>
+</table>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    添加用户信息
+                </h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="input-group">
+                    <input id="uname" type="text" class="form-control" placeholder="请输入用户名">
+                    <span class="glyphicon glyphicon-user input-group-addon"></span>
+                </div>
+                <br>
+                <div class="input-group">
+                    <input id="runame" type="text" class="form-control" placeholder="请输入真实姓名">
+                    <span class="glyphicon glyphicon-user input-group-addon"></span>
+                </div>
+                <br>
+                <div class="input-group">
+                    <select id="role" name="role" class="form-control">
+                        <option value="-">请选择</option>
+                        <option value="admin">管理员</option>
+                        <option value="teacher">教师</option>
+                        <option value="student">学生</option>
+                    </select>
+                    <span class="glyphicon glyphicon-send input-group-addon"></span>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button id="btnModal" type="button" class="btn btn-primary" onclick="optionUserInfo()">
+                    添加
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="other/node_modules/bootstrap3/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="other/node_modules/bootstrap3/dist/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="other/node_modules/layui-src/dist/css/layui.css"/>
+    <script src="other/node_modules/jquery/dist/jquery.js"></script>
+    <script src="other/node_modules/bootstrap3/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="other/node_modules/layui-src/dist/layui.all.js"></script>
+</head>
+<body>
+<div class="navbar-fixed-top">
+    <ul class="layui-nav">
+        <li class="layui-nav-item"><a href="">最新活动</a></li>
+        <li class="layui-nav-item layui-this">
+            <a href="javascript:;">产品</a>
+            <dl class="layui-nav-child">
+                <dd><a href="">选项1</a></dd>
+                <dd><a href="">选项2</a></dd>
+                <dd><a href="">选项3</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item"><a href="">大数据</a></li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">解决方案</a>
+            <dl class="layui-nav-child">
+                <dd><a href="">移动模块</a></dd>
+                <dd><a href="">后台模块</a></dd>
+                <dd class="layui-this"><a href="">选中项</a></dd>
+                <dd><a href="">电商平台</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item"><a href="">社区</a></li>
+        <li class="layui-nav-item pull-right">
+            <div class="dropdown " style="color:black">
+                <button type="button" class="btn dropdown-toggle" id="uname" data-toggle="dropdown">主题
+                    <span class="caret"></span>
+                </button>
+                <ul style="color: black;" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation">
+                        <a style="color: black;" role="menuitem" tabindex="-1" href="#">个人中心</a>
+                    </li>
+                    <li role="presentation">
+                        <a style="color: black;" role="menuitem" tabindex="-1" href="#">修改密码</a>
+                    </li>
+                    <li role="presentation">
+                        <a style="color: black;" role="menuitem" tabindex="-1" href="#">更换头像</a>
+                    </li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation">
+                        <a style="color: black;" role="menuitem" tabindex="-1" href="#">退出系统</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<br><br><br><br>
+<div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-3">
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseOne">
+                            用户管理
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="findUserInfoForAjax.html" target="mainFrame"><span
+                                        class="glyphicon glyphicon-user"></span> 用户信息</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="findUserInfoForAjax.html" target="mainFrame"><span
+                                        class="glyphicon glyphicon-tent"></span>详细信息</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseTwo">
+                            课程管理
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="findUserInfoForAjax.html" target="mainFrame"><span
+                                        class="glyphicon glyphicon-adjust"></span> 课程介绍</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="findUserInfoForAjax.html" target="mainFrame"><span
+                                        class="glyphicon glyphicon-map-marker"></span>课程表</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseThree">
+                            功能模块
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="findUserInfoForAjax.html" target="mainFrame"><span
+                                        class="glyphicon glyphicon-bookmark"></span> 新闻活动</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="findUserInfoForAjax.html" target="mainFrame"><span
+                                        class="glyphicon glyphicon-cloud"></span>健康博客</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseFour">
+                            相关帮助
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="findUserInfoForAjax.html" target="mainFrame"><span
+                                        class="glyphicon glyphicon-info-sign"></span> 精英招募</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="findUserInfoForAjax.html" target="mainFrame"><span
+                                        class="glyphicon glyphicon-inbox"></span>联系我们</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#collapseOne').collapse('hide')
+            });
+            $(function () {
+                $('#collapseTwo').collapse('hide')
+            });
+            $(function () {
+                $('#collapseThree').collapse('hide')
+            });
+            $(function () {
+                $('#collapseFour').collapse({
+                    toggle: false
+                })
+            });
+        </script>
+    </div>
+
+    <div class="col-lg-9 col-md-9 col-sm-9">
+        <iframe name="mainFrame" src="welcome.html" style="width: 100%;height: 600px" frameborder="0"></iframe>
+    </div>
+</div>
+
+<div align="center" class="navbar-fixed-bottom">
+    <address style="background-color: #64c3ff">&copy;2018-2019 Powered By 天津工大</address>
+</div>
+
+<script>
+    $(function () {
+        $("#uname").html(sessionStorage.getItem("uname"))
+    });
+</script>
+</body>
+</html>
